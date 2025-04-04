@@ -8,11 +8,6 @@ export interface PropertyType {
   PictureURL: string
   Location: string
   Sqft: number
-  number
-  ThumbnailURL: string
-  PictureURL: string
-  Location: string
-  Sqft: number
   Bedrooms: number
   Bathrooms: number
   Parking: number

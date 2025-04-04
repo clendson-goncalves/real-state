@@ -52,7 +52,7 @@ export default function PropertyCard({ property, isSaved, onToggleSave }: Proper
             <span>{property.Parking}</span>
           </div>
         </div>
-        <p className="font-bold text-xl mt-2">${property["Sale Price"].toLocaleString()}</p>
+        <p className="font-bold text-xl mt-2">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
       </CardContent>
       <CardFooter className="pt-0">
         <Link href={`/property/${property.Id}`} className="w-full">

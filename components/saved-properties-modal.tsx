@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useRouter } from "next/navigation"
 import type { PropertyType } from "@/types/property"
 import { Button } from "@/components/ui/button"
@@ -60,7 +58,7 @@ export default function SavedPropertiesModal({
                     <div>
                       <h3 className="font-medium line-clamp-1">{property.Title}</h3>
                       <p className="text-sm text-muted-foreground">{property.Location}</p>
-                      <p className="font-bold">${property["Sale Price"].toLocaleString()}</p>
+                      <p className="font-bold">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
                     </div>
                     <div className="flex gap-2 mt-2">
                       <Button

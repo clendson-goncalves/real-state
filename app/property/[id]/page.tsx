@@ -8,18 +8,23 @@ import { Card } from "@/components/ui/card"
 import { Bed, Bath, Car, Calendar, Home, ArrowLeft, BookmarkPlus, BookmarkCheck } from "lucide-react"
 import ContactForm from "@/components/contact-form"
 import SavedPropertiesModal from "@/components/saved-properties-modal"
+import { use } from "react"
 
-export default function PropertyDetails({ params }: { params: { id: string } }) {
+export default function PropertyDetails({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [property, setProperty] = useState<PropertyType | null>(null)
   const [loading, setLoading] = useState(true)
   const [savedProperties, setSavedProperties] = useState<PropertyType[]>([])
   const [showSavedModal, setShowSavedModal] = useState(false)
+  
+  // Unwrap params using React.use()
+  const unwrappedParams = use(params)
+  const propertyId = unwrappedParams.id
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(`/api/properties/${params.id}`)
+        const response = await fetch(`/api/properties/${propertyId}`)
         if (!response.ok) throw new Error("Property not found")
         const data = await response.json()
         setProperty(data)
@@ -30,7 +35,6 @@ export default function PropertyDetails({ params }: { params: { id: string } }) 
       }
     }
 
-    // Load saved properties from localStorage
     const loadSavedProperties = () => {
       const saved = localStorage.getItem("savedProperties")
       if (saved) setSavedProperties(JSON.parse(saved))
@@ -38,7 +42,7 @@ export default function PropertyDetails({ params }: { params: { id: string } }) 
 
     fetchProperty()
     loadSavedProperties()
-  }, [params.id])
+  }, [propertyId])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -100,7 +104,7 @@ export default function PropertyDetails({ params }: { params: { id: string } }) 
               <p className="text-muted-foreground">{property.Location}</p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-bold">${property["Sale Price"].toLocaleString()}</p>
+              <p className="text-3xl font-bold">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
               <p className="text-sm text-muted-foreground">Date Listed: {formatDate(property.DateListed)}</p>
             </div>
           </div>

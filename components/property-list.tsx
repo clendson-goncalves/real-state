@@ -1,4 +1,3 @@
-import type React from "react"
 import type { PropertyType } from "@/types/property"
 import PropertyCard from "@/components/property-card"
 

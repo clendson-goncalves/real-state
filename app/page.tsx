@@ -20,7 +20,7 @@ export default function Home() {
     priceRange: [100000, 800000],
   })
 
-  // Fetch properties data
+  // Fetch properties data and load saved properties
   useEffect(() => {
     const fetchProperties = async () => {
       try {
@@ -33,19 +33,18 @@ export default function Home() {
       }
     }
 
+    const loadSavedProperties = () => {
+      const saved = localStorage.getItem("savedProperties")
+      if (saved) {
+        setSavedProperties(JSON.parse(saved))
+      }
+    }
+
     fetchProperties()
     loadSavedProperties()
   }, [])
 
-  // Load saved properties from localStorage
-  const loadSavedProperties = () => {
-    const saved = localStorage.getItem("savedProperties")
-    if (saved) {
-      setSavedProperties(JSON.parse(saved))
-    }
-  }
-
-  // Apply filters manually when search button is clicked
+  // Apply filters
   const handleSearch = () => {
     const filtered = properties.filter((property) => {
       return (

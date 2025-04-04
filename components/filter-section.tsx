@@ -1,11 +1,8 @@
 "use client"
 
-import type React from "react"
-
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search } from "lucide-react"
 
 interface FilterSectionProps {
@@ -38,63 +35,54 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           <Label htmlFor="bedrooms" className="mb-2 block">
             Bedrooms:
           </Label>
-          <Select
-            value={filters.bedrooms.toString()}
-            onValueChange={(value) => setFilters({ ...filters, bedrooms: Number.parseInt(value) })}
+          <select
+            id="bedrooms"
+            className="w-full p-2 border rounded"
+            value={filters.bedrooms}
+            onChange={(e) => setFilters({ ...filters, bedrooms: Number(e.target.value) })}
           >
-            <SelectTrigger id="bedrooms">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              {[1, 2, 3, 4, 5].map((num) => (
-                <SelectItem key={`bed-${num}`} value={num.toString()}>
-                  {num}+
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={`bed-${num}`} value={num}>
+                {num}+
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
           <Label htmlFor="bathrooms" className="mb-2 block">
             Bathrooms:
           </Label>
-          <Select
-            value={filters.bathrooms.toString()}
-            onValueChange={(value) => setFilters({ ...filters, bathrooms: Number.parseInt(value) })}
+          <select
+            id="bathrooms"
+            className="w-full p-2 border rounded"
+            value={filters.bathrooms}
+            onChange={(e) => setFilters({ ...filters, bathrooms: Number(e.target.value) })}
           >
-            <SelectTrigger id="bathrooms">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              {[1, 2, 3, 4, 5].map((num) => (
-                <SelectItem key={`bath-${num}`} value={num.toString()}>
-                  {num}+
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={`bath-${num}`} value={num}>
+                {num}+
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
           <Label htmlFor="parking" className="mb-2 block">
             Parking:
           </Label>
-          <Select
-            value={filters.parking.toString()}
-            onValueChange={(value) => setFilters({ ...filters, parking: Number.parseInt(value) })}
+          <select
+            id="parking"
+            className="w-full p-2 border rounded"
+            value={filters.parking}
+            onChange={(e) => setFilters({ ...filters, parking: Number(e.target.value) })}
           >
-            <SelectTrigger id="parking">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              {[1, 2, 3, 4, 5, 6].map((num) => (
-                <SelectItem key={`park-${num}`} value={num.toString()}>
-                  {num}+
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {[1, 2, 3, 4, 5, 6].map((num) => (
+              <option key={`park-${num}`} value={num}>
+                {num}+
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
