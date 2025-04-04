@@ -29,15 +29,16 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
   }
 
   return (
-    <div className="p-4 mb-8">
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 items-end">
-        <div>
-          <Label htmlFor="bedrooms" className="mb-2 block">
+    <div className="py-4 mb-">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center font-light text-sm">
+
+        <div className="grid grid-cols-2 items-baseline">
+          <Label htmlFor="bedrooms" className="justify-end px-2">
             Bedrooms:
           </Label>
           <select
             id="bedrooms"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-md"
             value={filters.bedrooms}
             onChange={(e) => setFilters({ ...filters, bedrooms: Number(e.target.value) })}
           >
@@ -49,13 +50,13 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </select>
         </div>
 
-        <div>
-          <Label htmlFor="bathrooms" className="mb-2 block">
+        <div className="grid grid-cols-2 items-baseline">
+          <Label htmlFor="bathrooms" className="justify-end px-2">
             Bathrooms:
           </Label>
           <select
             id="bathrooms"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-md"
             value={filters.bathrooms}
             onChange={(e) => setFilters({ ...filters, bathrooms: Number(e.target.value) })}
           >
@@ -67,13 +68,13 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </select>
         </div>
 
-        <div>
-          <Label htmlFor="parking" className="mb-2 block">
+        <div className="grid grid-cols-2 items-baseline">
+          <Label htmlFor="parking" className="justify-end px-2">
             Parking:
           </Label>
           <select
             id="parking"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-md"
             value={filters.parking}
             onChange={(e) => setFilters({ ...filters, parking: Number(e.target.value) })}
           >

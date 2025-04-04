@@ -34,27 +34,24 @@ export default function PropertyCard({ property, isSaved, onToggleSave }: Proper
         </Button>
       </div>
       <CardContent className="pt-4 flex-grow">
-        <h2 className="font-semibold text-lg line-clamp-1" title={property.Title}>
+        <div className="font-light text-lg line-clamp-1" title={property.Title}>
           {property.Title}
-        </h2>
-        <p className="text-muted-foreground">{property.Location}</p>
-        <div className="flex items-center gap-4 mt-2 text-sm">
+        </div>
+        <p className="font-light text-sm text-muted-foreground">{property.Location}</p>
+        <div className="flex justify-start items-center gap-1 mt-1 text-xs font-light text-muted-foreground">
           <div className="flex items-center gap-1">
             <Bed className="h-4 w-4" />
-            <span>{property.Bedrooms}</span>
+            <span>{property.Bedrooms} beds</span>
           </div>
+          |
           <div className="flex items-center gap-1">
             <Bath className="h-4 w-4" />
-            <span>{property.Bathrooms}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Car className="h-4 w-4" />
-            <span>{property.Parking}</span>
+            <span>{property.Bathrooms} baths</span>
           </div>
         </div>
-        <p className="font-bold text-xl mt-2">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
+        <p className="font-light text-2xl mt-2">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
       </CardContent>
-      <CardFooter className="pt-0">
+      <CardFooter className="mb-4">
         <Link href={`/property/${property.Id}`} className="w-full">
           <Button variant="default" className="w-full">
             View Details
