@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import type { PropertyType } from "@/types/property"
 import { Bed, Bath, Car, BookmarkPlus, BookmarkCheck } from "lucide-react"
 
@@ -14,10 +14,10 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property, isSaved, onToggleSave }: PropertyCardProps) {
   return (
-    <Card className="overflow-hidden h-full flex flex-col">
-      <div className="relative h-48 w-full bg-muted">
+    <Card className="overflow-hidden h-full flex flex-col p-0">
+      <div className="relative w-full h-48">
         <img
-          src={property.ThumbnailURL || "/placeholder.svg"}
+          src={property.ThumbnailURL}
           alt={property.Title}
           className="object-cover w-full h-full"
         />

@@ -29,8 +29,8 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow mb-8">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+    <div className="p-4 mb-8">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 items-end">
         <div>
           <Label htmlFor="bedrooms" className="mb-2 block">
             Bedrooms:
@@ -85,15 +85,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </select>
         </div>
 
-        <div>
-          <Button onClick={onSearch} className="w-full" variant="default">
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-        </div>
-
-        <div className="md:col-span-4 space-y-6">
-          <div>
+          <div className="col-span-2 md:col-span-2">
             <Label className="mb-2 block">
               Price Range: {formatPrice(filters.priceRange[0])} - {formatPrice(filters.priceRange[1])}
             </Label>
@@ -106,7 +98,13 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
               className="my-4"
             />
           </div>
+        <div>
+          <Button onClick={onSearch} className="w-full" variant="default">
+            <Search className="h-4 w-4 mr-2" />
+            Search
+          </Button>
         </div>
+
       </div>
     </div>
   )
