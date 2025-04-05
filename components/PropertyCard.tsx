@@ -2,10 +2,10 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import type { PropertyType } from "@/types/property"
 import { Bed, Bath, BookmarkPlus, BookmarkCheck } from "lucide-react"
-
+import Image from "next/image"
 interface PropertyCardProps {
   property: PropertyType
   isSaved: boolean
@@ -19,9 +19,11 @@ export default function PropertyCard({ property, isSaved, onToggleSave }: Proper
     <Card className="overflow-hidden h-full flex flex-col p-0">
       <div className="relative w-full h-48">
         <Link href={`/property/${Id}`} className="w-full">
-          <img
+          <Image
             src={ThumbnailURL}
             alt={Title}
+            width={150}
+            height={150}
             className="object-cover w-full h-full hover:opacity-80"
           />
         </Link>

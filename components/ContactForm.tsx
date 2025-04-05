@@ -49,9 +49,8 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    validateAllFields() // this ensures up-to-date errors on blur too
+  const handleBlur = () => {
+    validateAllFields()
   }
 
   const handleSubmit = (e: React.FormEvent) => {

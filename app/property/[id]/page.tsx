@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import type { PropertyType } from "@/types/property"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -125,9 +126,11 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
           </div>
 
           <div className="relative h-[400px] w-full mb-6 bg-muted rounded-lg overflow-hidden">
-            <img
-              src={property.PictureURL || "/placeholder.svg"}
+            <Image
+              src={property.PictureURL}
               alt={property.Title}
+              width={350}
+              height={350}
               className="object-cover w-full h-full"
             />
           </div>

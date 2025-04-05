@@ -5,6 +5,7 @@ import type { PropertyType } from "@/types/property"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { X } from "lucide-react"
+import Image from "next/image"
 
 interface Props {
   savedProperties: PropertyType[]
@@ -48,7 +49,13 @@ export default function SavedPropertiesModal({
               {savedProperties.map(({ Id, Title, Location, ThumbnailURL, ["Sale Price"]: price }) => (
                 <Card key={Id} className="overflow-hidden flex p-0">
                   <div className="relative w-full h-36 flex-shrink-0">
-                    <img src={ThumbnailURL} alt={Title} className="object-cover w-full h-full" />
+                    <Image 
+                      src={ThumbnailURL} 
+                      alt={Title} 
+                      className="object-cover w-full h-full" 
+                      width={150}
+                      height={150}
+                    />
                   </div>
                   <div className="p-3 flex-grow flex flex-col justify-between">
                     <div>
