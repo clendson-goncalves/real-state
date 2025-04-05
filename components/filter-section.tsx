@@ -29,8 +29,8 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
   }
 
   return (
-    <div className="py-4 mb-">
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center font-light text-sm">
+    <div className="py-4 mb-8">
+      <div className="grid grid-cols-3 md:grid-cols-6 space-y-4 px-4 space-x-2 items-center font-light text-sm">
 
         <div className="grid grid-cols-2 items-baseline">
           <Label htmlFor="bedrooms" className="justify-end px-2">
@@ -38,7 +38,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="bedrooms"
-            className="w-full p-2 border rounded-md"
+            className="w-2/3 p-2 border rounded-md"
             value={filters.bedrooms}
             onChange={(e) => setFilters({ ...filters, bedrooms: Number(e.target.value) })}
           >
@@ -56,7 +56,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="bathrooms"
-            className="w-full p-2 border rounded-md"
+            className="w-2/3 p-2 border rounded-md"
             value={filters.bathrooms}
             onChange={(e) => setFilters({ ...filters, bathrooms: Number(e.target.value) })}
           >
@@ -74,7 +74,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="parking"
-            className="w-full p-2 border rounded-md"
+            className="w-2/3 p-2 border rounded-md"
             value={filters.parking}
             onChange={(e) => setFilters({ ...filters, parking: Number(e.target.value) })}
           >
@@ -87,7 +87,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
         </div>
 
           <div className="col-span-2 md:col-span-2">
-            <Label className="mb-2 block">
+            <Label className="px-2">
               Price Range: {formatPrice(filters.priceRange[0])} - {formatPrice(filters.priceRange[1])}
             </Label>
             <Slider

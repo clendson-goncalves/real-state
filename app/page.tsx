@@ -61,9 +61,9 @@ export default function Home() {
 
   return (
     <main className="container max-w-screen-lg mx-auto px-4 py-8">
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center px-4">
         {savedProperties.length > 0 && (
-          <Button onClick={() => setShowSavedModal(true)} variant="outline" className="flex items-center gap-2">
+          <Button onClick={() => setShowSavedModal(true)} variant="outline" className="flex items-center">
             <BookmarkIcon className="h-4 w-4" />
             Saved ({savedProperties.length})
           </Button>
