@@ -13,21 +13,58 @@ export default function ContactForm() {
     phone: "",
     comments: "",
   })
+
+  const [errors, setErrors] = useState<{
+    fullName?: string
+    email?: string
+    phone?: string
+    comments?: string
+  }>({})
+
   const [success, setSuccess] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
+  const validateAllFields = () => {
+    const newErrors: typeof errors = {}
+
+    if (form.fullName.trim().length < 3) {
+      newErrors.fullName = "Must be at least 3 characters."
+    }
+
+    if (!isValidEmail(form.email)) {
+      newErrors.email = "Please enter a valid email address."
+    }
+
+    if (!/^\d{8,}$/.test(form.phone)) {
+      newErrors.phone = "Must contain at least 8 digits and only numbers."
+    }
+
+    if (form.comments.trim().length < 10) {
+      newErrors.comments = "Must be at least 10 characters."
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setForm(prev => ({ ...prev, [name]: value }))
+    validateAllFields() // this ensures up-to-date errors on blur too
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const isValid = Object.values(form).every(v => v.trim())
+
+    const isValid = validateAllFields()
+
     if (!isValid) return
 
     setTimeout(() => {
       setSuccess(true)
       setForm({ fullName: "", email: "", phone: "", comments: "" })
+      setErrors({})
     }, 500)
   }
 
@@ -40,50 +77,72 @@ export default function ContactForm() {
         </div>
       )}
 
-      <Input
-        id="fullName"
-        name="fullName"
-        placeholder="Full Name *"
-        value={form.fullName}
-        onChange={handleChange}
-        className="bg-white"
-        required
-      />
+      <div>
+        <Input
+          name="fullName"
+          placeholder="Full Name *"
+          value={form.fullName}
+          onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+          onBlur={handleBlur}
+          className="bg-white"
+          required
+        />
+        {errors.fullName && (
+          <p className="text-xs text-red-600 mt-1 px-2">{errors.fullName}</p>
+        )}
+      </div>
 
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Email *"
-        value={form.email}
-        onChange={handleChange}
-        className="bg-white"
-        required
-      />
+      <div>
+        <Input
+          name="email"
+          type="email"
+          placeholder="Email *"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onBlur={handleBlur}
+          className="bg-white"
+          required
+        />
+        {errors.email && (
+          <p className="text-xs text-red-600 mt-1 px-2">{errors.email}</p>
+        )}
+      </div>
 
-      <Input
-        id="phone"
-        name="phone"
-        type="tel"
-        placeholder="Phone Number *"
-        value={form.phone}
-        onChange={handleChange}
-        className="bg-white"
-        required
-      />
+      <div>
+        <Input
+          name="phone"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          placeholder="Phone Number *"
+          value={form.phone}
+          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          onBlur={handleBlur}
+          className="bg-white"
+          required
+        />
+        {errors.phone && (
+          <p className="text-xs text-red-600 mt-1 px-2">{errors.phone}</p>
+        )}
+      </div>
 
-      <Textarea
-        id="comments"
-        name="comments"
-        placeholder="Comments *"
-        value={form.comments}
-        onChange={handleChange}
-        className="bg-white"
-        rows={4}
-        required
-      />
+      <div>
+        <Textarea
+          name="comments"
+          placeholder="Comments *"
+          value={form.comments}
+          onChange={(e) => setForm({ ...form, comments: e.target.value })}
+          onBlur={handleBlur}
+          className="bg-white h-32"
+          rows={4}
+          required
+        />
+        {errors.comments && (
+          <p className="text-xs text-red-600 mt-1 px-2">{errors.comments}</p>
+        )}
+      </div>
 
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full mt-4">
         Contact Now
       </Button>
     </form>

@@ -155,7 +155,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
         </div>
 
         <div className="lg:col-span-1">
-          <Card className="p-6 bg-muted">
+          <Card className="p-4 bg-muted">
             <p className="text-xl font-semibold mb-4 text-center">Contact Agent</p>
             <ContactForm />
           </Card>
