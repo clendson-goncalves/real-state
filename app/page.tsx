@@ -10,9 +10,9 @@ import { BookmarkIcon } from "lucide-react"
 
 export default function Home() {
   const [properties, setProperties] = useState<PropertyType[]>([])
-  const [filteredProperties, setFilteredProperties] = useState<PropertyType[]>([])
-  const [savedProperties, setSavedProperties] = useState<PropertyType[]>([])
-  const [showSavedModal, setShowSavedModal] = useState(false)
+  const [filtered, setFiltered] = useState<PropertyType[]>([])
+  const [saved, setSaved] = useState<PropertyType[]>([])
+  const [showModal, setShowModal] = useState(false)
   const [filters, setFilters] = useState({
     bedrooms: 1,
     bathrooms: 1,
@@ -20,52 +20,46 @@ export default function Home() {
     priceRange: [100000, 800000],
   })
 
-  // Fetch properties data and load saved properties
   useEffect(() => {
-    const fetchProperties = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("/api/properties")
-        const data = await response.json()
+        const res = await fetch("/api/properties")
+        const data = await res.json()
         setProperties(data)
-        setFilteredProperties(data)
-      } catch (error) {
-        console.error("Error fetching properties:", error)
+        setFiltered(data)
+      } catch (err) {
+        console.error("Fetch error:", err)
       }
     }
 
-    const loadSavedProperties = () => {
-      const saved = localStorage.getItem("savedProperties")
-      if (saved) {
-        setSavedProperties(JSON.parse(saved))
-      }
+    const loadSaved = () => {
+      const savedData = localStorage.getItem("savedProperties")
+      if (savedData) setSaved(JSON.parse(savedData))
     }
 
-    fetchProperties()
-    loadSavedProperties()
+    fetchData()
+    loadSaved()
   }, [])
 
-  // Apply filters
   const handleSearch = () => {
-    const filtered = properties.filter((property) => {
-      return (
-        property.Bedrooms >= filters.bedrooms &&
-        property.Bathrooms >= filters.bathrooms &&
-        property.Parking >= filters.parking &&
-        property["Sale Price"] >= filters.priceRange[0] &&
-        property["Sale Price"] <= filters.priceRange[1]
-      )
-    })
+    const results = properties.filter(p =>
+      p.Bedrooms >= filters.bedrooms &&
+      p.Bathrooms >= filters.bathrooms &&
+      p.Parking >= filters.parking &&
+      p["Sale Price"] >= filters.priceRange[0] &&
+      p["Sale Price"] <= filters.priceRange[1]
+    )
 
-    setFilteredProperties(filtered)
+    setFiltered(results)
   }
 
   return (
     <main className="container max-w-screen-lg mx-auto px-4 py-8">
-      <div className="flex justify-end items-center px-4">
-        {savedProperties.length > 0 && (
-          <Button onClick={() => setShowSavedModal(true)} variant="outline" className="flex items-center">
+      <div className="flex justify-end px-4">
+        {saved.length > 0 && (
+          <Button onClick={() => setShowModal(true)} variant="outline" className="flex items-center">
             <BookmarkIcon className="h-4 w-4" />
-            Saved ({savedProperties.length})
+            Saved Properties ({saved.length})
           </Button>
         )}
       </div>
@@ -73,19 +67,18 @@ export default function Home() {
       <FilterSection filters={filters} setFilters={setFilters} onSearch={handleSearch} />
 
       <PropertyList
-        properties={filteredProperties}
-        savedProperties={savedProperties}
-        setSavedProperties={setSavedProperties}
+        properties={filtered}
+        savedProperties={saved}
+        setSavedProperties={setSaved}
       />
 
-      {showSavedModal && (
+      {showModal && (
         <SavedPropertiesModal
-          savedProperties={savedProperties}
-          setSavedProperties={setSavedProperties}
-          onClose={() => setShowSavedModal(false)}
+          savedProperties={saved}
+          setSavedProperties={setSaved}
+          onClose={() => setShowModal(false)}
         />
       )}
     </main>
   )
 }
-

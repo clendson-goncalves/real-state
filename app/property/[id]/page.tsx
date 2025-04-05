@@ -1,76 +1,62 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
 import type { PropertyType } from "@/types/property"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Bed, Bath, Car, Calendar, Home, ArrowLeft, BookmarkPlus, BookmarkCheck } from "lucide-react"
+import { Bed, Bath, Car, Calendar, Home, ArrowLeft, BookmarkPlus, BookmarkCheck, BookmarkIcon } from "lucide-react"
 import ContactForm from "@/components/contact-form"
 import SavedPropertiesModal from "@/components/saved-properties-modal"
-import { use } from "react"
 
 export default function PropertyDetails({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [property, setProperty] = useState<PropertyType | null>(null)
   const [loading, setLoading] = useState(true)
-  const [savedProperties, setSavedProperties] = useState<PropertyType[]>([])
-  const [showSavedModal, setShowSavedModal] = useState(false)
+  const [saved, setSaved] = useState<PropertyType[]>([])
+  const [showModal, setShowModal] = useState(false)
 
-  // Unwrap params using React.use()
-  const unwrappedParams = use(params)
-  const propertyId = unwrappedParams.id
+  const { id: propertyId } = use(params)
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(`/api/properties/${propertyId}`)
-        if (!response.ok) throw new Error("Property not found")
-        const data = await response.json()
+        const res = await fetch(`/api/properties/${propertyId}`)
+        if (!res.ok) throw new Error("Not found")
+        const data = await res.json()
         setProperty(data)
-      } catch (error) {
-        console.error("Error fetching property:", error)
+      } catch (err) {
+        console.error("Fetch error:", err)
       } finally {
         setLoading(false)
       }
     }
 
-    const loadSavedProperties = () => {
-      const saved = localStorage.getItem("savedProperties")
-      if (saved) setSavedProperties(JSON.parse(saved))
+    const loadSaved = () => {
+      const stored = localStorage.getItem("savedProperties")
+      if (stored) setSaved(JSON.parse(stored))
     }
 
     fetchProperty()
-    loadSavedProperties()
+    loadSaved()
   }, [propertyId])
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+  const formatDate = (str: string) =>
+    new Date(str).toLocaleDateString("en-US", {
+      year: "numeric", month: "short", day: "numeric",
     })
-  }
 
-  const isPropertySaved = () => {
-    return property ? savedProperties.some((p) => p.Id === property.Id) : false
-  }
+  const isSaved = () => property ? saved.some(p => p.Id === property.Id) : false
 
-  const handleSaveProperty = () => {
+  const toggleSave = () => {
     if (!property) return
 
-    if (isPropertySaved()) {
-      // Remove from saved
-      const updated = savedProperties.filter((p) => p.Id !== property.Id)
-      setSavedProperties(updated)
-      localStorage.setItem("savedProperties", JSON.stringify(updated))
-    } else {
-      // Add to saved
-      const updated = [...savedProperties, property]
-      setSavedProperties(updated)
-      localStorage.setItem("savedProperties", JSON.stringify(updated))
-    }
+    const updated = isSaved()
+      ? saved.filter(p => p.Id !== property.Id)
+      : [...saved, property]
+
+    setSaved(updated)
+    localStorage.setItem("savedProperties", JSON.stringify(updated))
   }
 
   if (loading) {
@@ -88,8 +74,6 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
     )
   }
 
-  const saved = isPropertySaved()
-
   return (
     <main className="container max-w-screen-lg mx-auto px-4 py-8">
       <Button onClick={() => router.push("/")} variant="outline" className="mb-6">
@@ -104,14 +88,16 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
               <p className="text-sm font-light text-muted-foreground">{property.Location}</p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-light">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
-              <p className="text-xs md:text-sm font-light text-muted-foreground">Date Listed: {formatDate(property.DateListed)}</p>
+              <p className="text-3xl font-light">${property["Sale Price"]?.toLocaleString() ?? "N/A"}</p>
+              <p className="text-xs font-light text-muted-foreground">
+                Date Listed: {formatDate(property.DateListed)}
+              </p>
             </div>
           </div>
 
-          <div className=" mb-6 flex justify-between">
-            <Button onClick={handleSaveProperty} className="" variant={saved ? "default" : "outline"}>
-              {saved ? (
+          <div className="flex justify-between mb-6">
+            <Button onClick={toggleSave} variant={isSaved() ? "default" : "outline"}>
+              {isSaved() ? (
                 <>
                   <BookmarkCheck className="mr-2 h-4 w-4" /> Saved
                 </>
@@ -122,18 +108,20 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
               )}
             </Button>
 
-            {showSavedModal && (
-              <SavedPropertiesModal
-                savedProperties={savedProperties}
-                setSavedProperties={setSavedProperties}
-                onClose={() => setShowSavedModal(false)}
-              />
+            {saved.length > 0 && (
+              <Button onClick={() => setShowModal(true)}>
+                 <BookmarkIcon className="h-4 w-4" />
+                Saved Properties ({saved.length})
+              </Button>
             )}
 
-          {savedProperties.length > 0 && (
-  
-              <Button onClick={() => setShowSavedModal(true)}>Saved Properties ({savedProperties.length})</Button>
-          )}
+            {showModal && (
+              <SavedPropertiesModal
+                savedProperties={saved}
+                setSavedProperties={setSaved}
+                onClose={() => setShowModal(false)}
+              />
+            )}
           </div>
 
           <div className="relative h-[400px] w-full mb-6 bg-muted rounded-lg overflow-hidden">
@@ -145,31 +133,19 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
           </div>
 
           <div className="grid grid-cols-5 gap-4 mb-6 text-center">
-            <div className="p-4 bg-muted rounded-lg">
-              <Bed className="h-6 w-6 mx-auto mb-2" />
-              <p className="font-bold text-xl">{property.Bedrooms}</p>
-              <p className="text-xs text-muted-foreground">BED</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <Bath className="h-6 w-6 mx-auto mb-2" />
-              <p className="font-bold text-xl">{property.Bathrooms}</p>
-              <p className="text-xs text-muted-foreground">BATH</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <Car className="h-6 w-6 mx-auto mb-2" />
-              <p className="font-bold text-xl">{property.Parking}</p>
-              <p className="text-xs text-muted-foreground">PARKING</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <Home className="h-6 w-6 mx-auto mb-2" />
-              <p className="font-bold text-xl">{property.Sqft}</p>
-              <p className="text-xs text-muted-foreground">SQFT</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <Calendar className="h-6 w-6 mx-auto mb-2" />
-              <p className="font-bold text-xl">{property.YearBuilt}</p>
-              <p className="text-xs text-muted-foreground">YEAR BUILT</p>
-            </div>
+            {[
+              { Icon: Bed, label: "BED", value: property.Bedrooms },
+              { Icon: Bath, label: "BATH", value: property.Bathrooms },
+              { Icon: Car, label: "PARKING", value: property.Parking },
+              { Icon: Home, label: "SQFT", value: property.Sqft },
+              { Icon: Calendar, label: "YEAR BUILT", value: property.YearBuilt },
+            ].map(({ Icon, label, value }) => (
+              <div key={label} className="p-4 bg-muted rounded-lg">
+                <Icon className="h-6 w-6 mx-auto mb-2" />
+                <p className="font-bold text-xl">{value}</p>
+                <p className="text-xs text-muted-foreground">{label}</p>
+              </div>
+            ))}
           </div>
 
           <div className="mb-6">
@@ -188,4 +164,3 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
     </main>
   )
 }
-

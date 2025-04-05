@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { X } from "lucide-react"
 
-interface SavedPropertiesModalProps {
+interface Props {
   savedProperties: PropertyType[]
   setSavedProperties: React.Dispatch<React.SetStateAction<PropertyType[]>>
   onClose: () => void
@@ -16,16 +16,16 @@ export default function SavedPropertiesModal({
   savedProperties,
   setSavedProperties,
   onClose,
-}: SavedPropertiesModalProps) {
+}: Props) {
   const router = useRouter()
 
-  const handleRemove = (id: number) => {
-    const updated = savedProperties.filter((p) => p.Id !== id)
+  const remove = (id: number) => {
+    const updated = savedProperties.filter(p => p.Id !== id)
     setSavedProperties(updated)
     localStorage.setItem("savedProperties", JSON.stringify(updated))
   }
 
-  const handleViewDetails = (id: number) => {
+  const viewDetails = (id: number) => {
     router.push(`/property/${id}`)
     onClose()
   }
@@ -44,36 +44,29 @@ export default function SavedPropertiesModal({
           {savedProperties.length === 0 ? (
             <p className="text-center py-8 text-muted-foreground">No saved properties</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-0">
-              {savedProperties.map((property) => (
-                <Card key={property.Id} className="overflow-hidden flex p-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {savedProperties.map(({ Id, Title, Location, ThumbnailURL, ["Sale Price"]: price }) => (
+                <Card key={Id} className="overflow-hidden flex p-0">
                   <div className="relative w-full h-36 flex-shrink-0">
-                    <img
-                      src={property.ThumbnailURL}
-                      alt={property.Title}
-                      className="object-cover w-full h-full"
-                    />
+                    <img src={ThumbnailURL} alt={Title} className="object-cover w-full h-full" />
                   </div>
                   <div className="p-3 flex-grow flex flex-col justify-between">
                     <div>
-                      <p className="font-light line-clamp-1">{property.Title}</p>
-                      <p className="text-xs font-light text-muted-foreground">{property.Location}</p>
-                      <p className="font-light text-lg">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
+                      <p className="font-semibold line-clamp-1">{Title}</p>
+                      <p className="text-xs font-light text-muted-foreground">{Location}</p>
+                      <p className="font-light text-lg">
+                        {price ? `$${price.toLocaleString()}` : "N/A"}
+                      </p>
                     </div>
                     <div className="flex gap-2 mt-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1"
-                        onClick={() => handleViewDetails(property.Id)}
-                      >
+                      <Button size="sm" variant="outline" className="flex-1" onClick={() => viewDetails(Id)}>
                         View
                       </Button>
                       <Button
                         size="sm"
                         variant="destructive"
                         className="flex-1 bg-red-700 hover:bg-red-800"
-                        onClick={() => handleRemove(property.Id)}
+                        onClick={() => remove(Id)}
                       >
                         Remove
                       </Button>
@@ -88,4 +81,3 @@ export default function SavedPropertiesModal({
     </div>
   )
 }
-
