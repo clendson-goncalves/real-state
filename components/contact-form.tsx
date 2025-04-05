@@ -44,38 +44,26 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
       {success && (
-        <div className="bg-green-50 text-green-800 border border-green-200 p-3 rounded flex items-center">
+        <div className="text-sm bg-green-50 text-green-800 border border-green-200 p-3 rounded flex items-center">
           <CheckCircle2 className="h-4 w-4 text-green-600 mr-2" />
-          <span>Message sent successfully!</span>
+          <span>Message sent successfully.</span>
         </div>
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="fullName">
-          Full Name <span className="text-red-500">*</span>
-        </Label>
-        <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
+        <Input id="fullName" name="fullName" className="bg-white" placeholder="Full Name *" value={formData.fullName} onChange={handleChange} required />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">
-          Email <span className="text-red-500">*</span>
-        </Label>
-        <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+        <Input id="email" name="email" className="bg-white" placeholder="Email *" type="email" value={formData.email} onChange={handleChange} required />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="phone">
-          Phone Number <span className="text-red-500">*</span>
-        </Label>
-        <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} required />
+        <Input id="phone" name="phone" className="bg-white" placeholder="Phone Number *" type="tel" value={formData.phone} onChange={handleChange} required />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="comments">
-          Comments <span className="text-red-500">*</span>
-        </Label>
-        <Textarea id="comments" name="comments" value={formData.comments} onChange={handleChange} rows={4} required />
+        <Textarea id="comments" name="comments" className="bg-white" placeholder="Comments *" value={formData.comments} onChange={handleChange} rows={4} required />
       </div>
 
       <Button type="submit" className="w-full">

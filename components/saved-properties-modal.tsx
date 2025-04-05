@@ -32,33 +32,33 @@ export default function SavedPropertiesModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[80vh] overflow-hidden">
-        <div className="p-4 border-b flex justify-between items-center">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[80vh] overflow-hidden">
+        <div className="px-4 py-2 flex justify-between items-center">
           <h2 className="text-xl font-bold">Saved Properties</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="overflow-y-auto p-4 max-h-[calc(80vh-80px)]">
+        <div className="px-4 mb-4">
           {savedProperties.length === 0 ? (
             <p className="text-center py-8 text-muted-foreground">No saved properties</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-0">
               {savedProperties.map((property) => (
-                <Card key={property.Id} className="overflow-hidden flex">
-                  <div className="relative h-24 w-24 flex-shrink-0">
+                <Card key={property.Id} className="overflow-hidden flex p-0">
+                  <div className="relative w-full h-36 flex-shrink-0">
                     <img
-                      src={property.ThumbnailURL || "/placeholder.svg"}
+                      src={property.ThumbnailURL}
                       alt={property.Title}
                       className="object-cover w-full h-full"
                     />
                   </div>
                   <div className="p-3 flex-grow flex flex-col justify-between">
                     <div>
-                      <h3 className="font-medium line-clamp-1">{property.Title}</h3>
-                      <p className="text-sm text-muted-foreground">{property.Location}</p>
-                      <p className="font-bold">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
+                      <p className="font-light line-clamp-1">{property.Title}</p>
+                      <p className="text-xs font-light text-muted-foreground">{property.Location}</p>
+                      <p className="font-light text-lg">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
                     </div>
                     <div className="flex gap-2 mt-2">
                       <Button
@@ -72,7 +72,7 @@ export default function SavedPropertiesModal({
                       <Button
                         size="sm"
                         variant="destructive"
-                        className="flex-1"
+                        className="flex-1 bg-red-700 hover:bg-red-800"
                         onClick={() => handleRemove(property.Id)}
                       >
                         Remove

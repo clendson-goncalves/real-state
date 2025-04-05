@@ -26,7 +26,7 @@ export default function PropertyCard({ property, isSaved, onToggleSave }: Proper
         <Button
           variant="secondary"
           size="icon"
-          className="absolute top-2 right-2 bg-white/50 text-slate-400 hover:bg-white hover:text-slate-900"
+          className="absolute top-2 right-2 bg-white/60 text-slate-300 hover:bg-white hover:text-slate-900"
           onClick={(e) => {
             e.preventDefault()
             onToggleSave()
@@ -36,7 +36,7 @@ export default function PropertyCard({ property, isSaved, onToggleSave }: Proper
         </Button>
       </div>
       <CardContent className="pt-4 flex-grow">
-        <div className="font-light text-lg line-clamp-1" title={property.Title}>
+        <div className="font-semibold text-lg line-clamp-1" title={property.Title}>
           {property.Title}
         </div>
         <p className="font-light text-sm text-muted-foreground">{property.Location}</p>

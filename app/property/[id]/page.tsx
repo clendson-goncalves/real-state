@@ -16,7 +16,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
   const [loading, setLoading] = useState(true)
   const [savedProperties, setSavedProperties] = useState<PropertyType[]>([])
   const [showSavedModal, setShowSavedModal] = useState(false)
-  
+
   // Unwrap params using React.use()
   const unwrappedParams = use(params)
   const propertyId = unwrappedParams.id
@@ -91,7 +91,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
   const saved = isPropertySaved()
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="container max-w-screen-lg mx-auto px-4 py-8">
       <Button onClick={() => router.push("/")} variant="outline" className="mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to listings
       </Button>
@@ -100,26 +100,41 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
         <div className="lg:col-span-2">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-3xl font-bold">{property.Title}</h1>
-              <p className="text-muted-foreground">{property.Location}</p>
+              <p className="text-2xl w-2/3 sm:w-full font-semibold">{property.Title}</p>
+              <p className="text-sm font-light text-muted-foreground">{property.Location}</p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-bold">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
-              <p className="text-sm text-muted-foreground">Date Listed: {formatDate(property.DateListed)}</p>
+              <p className="text-3xl font-light">${property["Sale Price"] ? property["Sale Price"].toLocaleString() : 'N/A'}</p>
+              <p className="text-xs md:text-sm font-light text-muted-foreground">Date Listed: {formatDate(property.DateListed)}</p>
             </div>
           </div>
 
-          <Button onClick={handleSaveProperty} className="mb-6" variant={saved ? "secondary" : "default"}>
-            {saved ? (
-              <>
-                <BookmarkCheck className="mr-2 h-4 w-4" /> Saved
-              </>
-            ) : (
-              <>
-                <BookmarkPlus className="mr-2 h-4 w-4" /> Save Property
-              </>
+          <div className=" mb-6 flex justify-between">
+            <Button onClick={handleSaveProperty} className="" variant={saved ? "default" : "outline"}>
+              {saved ? (
+                <>
+                  <BookmarkCheck className="mr-2 h-4 w-4" /> Saved
+                </>
+              ) : (
+                <>
+                  <BookmarkPlus className="mr-2 h-4 w-4" /> Save Property
+                </>
+              )}
+            </Button>
+
+            {showSavedModal && (
+              <SavedPropertiesModal
+                savedProperties={savedProperties}
+                setSavedProperties={setSavedProperties}
+                onClose={() => setShowSavedModal(false)}
+              />
             )}
-          </Button>
+
+          {savedProperties.length > 0 && (
+  
+              <Button onClick={() => setShowSavedModal(true)}>Saved Properties ({savedProperties.length})</Button>
+          )}
+          </div>
 
           <div className="relative h-[400px] w-full mb-6 bg-muted rounded-lg overflow-hidden">
             <img
@@ -164,26 +179,12 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
         </div>
 
         <div className="lg:col-span-1">
-          <Card className="p-6 bg-muted/30">
-            <h2 className="text-xl font-semibold mb-4 text-center">Contact Agent</h2>
+          <Card className="p-6 bg-muted">
+            <p className="text-xl font-semibold mb-4 text-center">Contact Agent</p>
             <ContactForm />
           </Card>
         </div>
       </div>
-
-      {showSavedModal && (
-        <SavedPropertiesModal
-          savedProperties={savedProperties}
-          setSavedProperties={setSavedProperties}
-          onClose={() => setShowSavedModal(false)}
-        />
-      )}
-
-      {savedProperties.length > 0 && (
-        <div className="fixed bottom-4 right-4">
-          <Button onClick={() => setShowSavedModal(true)}>Saved Properties ({savedProperties.length})</Button>
-        </div>
-      )}
     </main>
   )
 }

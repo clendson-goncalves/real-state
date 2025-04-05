@@ -30,7 +30,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
 
   return (
     <div className="py-4 mb-8">
-      <div className="grid grid-cols-3 md:grid-cols-6 space-y-4 px-4 space-x-2 items-center font-light text-sm">
+      <div className="grid grid-cols-3 md:grid-cols-6 space-y-4 px-6 md:px-4 items-center font-light text-sm">
 
         <div className="grid grid-cols-2 items-baseline">
           <Label htmlFor="bedrooms" className="justify-end px-2">
@@ -38,7 +38,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="bedrooms"
-            className="w-2/3 p-2 border rounded-md"
+            className="w-3/4 p-2 border rounded-md"
             value={filters.bedrooms}
             onChange={(e) => setFilters({ ...filters, bedrooms: Number(e.target.value) })}
           >
@@ -56,7 +56,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="bathrooms"
-            className="w-2/3 p-2 border rounded-md"
+            className="w-3/4 p-2 border rounded-md"
             value={filters.bathrooms}
             onChange={(e) => setFilters({ ...filters, bathrooms: Number(e.target.value) })}
           >
@@ -74,7 +74,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
           </Label>
           <select
             id="parking"
-            className="w-2/3 p-2 border rounded-md"
+            className="w-3/4 p-2 border rounded-md"
             value={filters.parking}
             onChange={(e) => setFilters({ ...filters, parking: Number(e.target.value) })}
           >
@@ -96,7 +96,7 @@ export default function FilterSection({ filters, setFilters, onSearch }: FilterS
               step={10000}
               value={filters.priceRange}
               onValueChange={(value) => setFilters({ ...filters, priceRange: value })}
-              className="my-4"
+              className="my-4 w-[95%]"
             />
           </div>
         <div>
