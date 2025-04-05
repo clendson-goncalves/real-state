@@ -1,5 +1,5 @@
 import type { PropertyType } from "@/types/property"
-import PropertyCard from "@/components/property-card"
+import PropertyCard from "@/components/PropertyCard"
 
 interface PropertyListProps {
   properties: PropertyType[]

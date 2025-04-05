@@ -6,8 +6,8 @@ import type { PropertyType } from "@/types/property"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Bed, Bath, Car, Calendar, Home, ArrowLeft, BookmarkPlus, BookmarkCheck, BookmarkIcon } from "lucide-react"
-import ContactForm from "@/components/contact-form"
-import SavedPropertiesModal from "@/components/saved-properties-modal"
+import ContactForm from "@/components/ContactForm"
+import SavedPropertiesModal from "@/components/SavedPropertiesModal"
 
 export default function PropertyDetails({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()

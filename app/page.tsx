@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import type { PropertyType } from "@/types/property"
-import PropertyList from "@/components/property-list"
-import FilterSection from "@/components/filter-section"
-import SavedPropertiesModal from "@/components/saved-properties-modal"
+import PropertyList from "@/components/PropertyList"
+import FilterSection from "@/components/FilterSection"
+import SavedPropertiesModal from "@/components/SavedPropertiesModal"
 import { Button } from "@/components/ui/button"
 import { BookmarkIcon } from "lucide-react"
 
