@@ -2,13 +2,14 @@ import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, context: { params: { id: string } }) {
+  const { id } = await context.params
   try {
     const file = path.join(process.cwd(), "data/listings.json")
     const data = fs.readFileSync(file, "utf8")
     const properties = JSON.parse(data)
 
-    const property = properties.find((p: any) => p.Id === parseInt(params.id))
+    const property = properties.find((p: any) => p.Id === parseInt(id))
 
     if (!property) {
       return NextResponse.json({ error: "Property not found" }, { status: 404 })
