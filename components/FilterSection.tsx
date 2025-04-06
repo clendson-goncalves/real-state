@@ -5,6 +5,15 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Search } from "lucide-react"
 
+/**
+ * Filters type defining the structure of property filter options
+ * 
+ * @typedef {Object} Filters
+ * @property {number} bedrooms - Minimum number of bedrooms
+ * @property {number} bathrooms - Minimum number of bathrooms
+ * @property {number} parking - Minimum number of parking spaces
+ * @property {number[]} priceRange - Array with min and max price values
+ */
 type Filters = {
   bedrooms: number
   bathrooms: number
@@ -12,12 +21,29 @@ type Filters = {
   priceRange: number[]
 }
 
+/**
+ * Props for the FilterSection component
+ * 
+ * @interface FilterSectionProps
+ * @property {Filters} filters - Current filter values
+ * @property {React.Dispatch<React.SetStateAction<Filters>>} setFilters - Function to update filters
+ * @property {() => void} onSearch - Function to trigger search with current filters
+ */
 interface FilterSectionProps {
   filters: Filters
   setFilters: React.Dispatch<React.SetStateAction<Filters>>
   onSearch: () => void
 }
 
+/**
+ * FilterSection Component
+ * 
+ * A component that provides property search filtering options including
+ * bedrooms, bathrooms, parking spaces, and price range.
+ * 
+ * @param {FilterSectionProps} props - Component props
+ * @returns {JSX.Element} Rendered filter interface with dropdowns and price slider
+ */
 export default function FilterSection({ filters, setFilters, onSearch }: FilterSectionProps) {
   const formatPrice = (value: number) => `$${value.toLocaleString()}`
 

@@ -7,12 +7,29 @@ import { Card } from "@/components/ui/card"
 import { X } from "lucide-react"
 import Image from "next/image"
 
+/**
+ * Props for the SavedPropertiesModal component
+ * 
+ * @interface Props
+ * @property {PropertyType[]} savedProperties - Array of properties saved by the user
+ * @property {React.Dispatch<React.SetStateAction<PropertyType[]>>} setSavedProperties - Function to update saved properties
+ * @property {() => void} onClose - Function to close the modal
+ */
 interface Props {
   savedProperties: PropertyType[]
   setSavedProperties: React.Dispatch<React.SetStateAction<PropertyType[]>>
   onClose: () => void
 }
 
+/**
+ * SavedPropertiesModal Component
+ * 
+ * A modal displaying all properties saved by the user.
+ * Allows viewing property details or removing properties from saved list.
+ * 
+ * @param {Props} props - Component props
+ * @returns {JSX.Element} Modal with saved properties list
+ */
 export default function SavedPropertiesModal({
   savedProperties,
   setSavedProperties,

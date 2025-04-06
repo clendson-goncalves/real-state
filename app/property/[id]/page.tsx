@@ -10,6 +10,17 @@ import { Bed, Bath, Car, Calendar, Home, ArrowLeft, BookmarkPlus, BookmarkCheck,
 import ContactForm from "@/components/ContactForm"
 import SavedPropertiesModal from "@/components/SavedPropertiesModal"
 
+/**
+ * PropertyDetails Page Component
+ * 
+ * Displays detailed information about a specific property.
+ * Features include property specifications, description, saving functionality,
+ * contact form, and navigation back to listings.
+ * 
+ * @param {Object} props - Component props
+ * @param {Promise<{id: string}>} props.params - Route parameters containing the property ID
+ * @returns {JSX.Element} The rendered property details page
+ */
 export default function PropertyDetails({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [property, setProperty] = useState<PropertyType | null>(null)

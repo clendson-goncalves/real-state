@@ -6,6 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2 } from "lucide-react"
 
+/**
+ * ContactForm Component
+ * 
+ * A form component for user inquiries about properties.
+ * Features client-side validation for all fields and displays success message on submission.
+ * 
+ * @returns {JSX.Element} Rendered form with input fields for full name, email, phone, and comments
+ */
 export default function ContactForm() {
   const [form, setForm] = useState({
     fullName: "",

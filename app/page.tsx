@@ -8,6 +8,14 @@ import SavedPropertiesModal from "@/components/SavedPropertiesModal"
 import { Button } from "@/components/ui/button"
 import { BookmarkIcon } from "lucide-react"
 
+/**
+ * Home Page Component
+ * 
+ * The main landing page of the application displaying property listings with filtering capabilities.
+ * Features include property searching, filtering, and saved properties management.
+ * 
+ * @returns {JSX.Element} The rendered homepage with filters and property listings
+ */
 export default function Home() {
   const [properties, setProperties] = useState<PropertyType[]>([])
   const [filtered, setFiltered] = useState<PropertyType[]>([])

@@ -2,6 +2,18 @@ import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
 
+/**
+ * GET Handler for single property by ID
+ * 
+ * Retrieves a specific property listing from the data file based on its ID.
+ * Serves as the endpoint for fetching individual property details.
+ * 
+ * @param {Request} _ - The request object (unused)
+ * @param {Object} context - The route context object
+ * @param {Object} context.params - The route parameters
+ * @param {string} context.params.id - The property ID to retrieve
+ * @returns {Promise<NextResponse>} JSON response with property data or error message
+ */
 export async function GET(_: Request, context: { params: { id: string } }) {
   const { id } = await context.params
   try {

@@ -1,12 +1,29 @@
 import type { PropertyType } from "@/types/property"
 import PropertyCard from "@/components/PropertyCard"
 
+/**
+ * Props for the PropertyList component
+ * 
+ * @interface PropertyListProps
+ * @property {PropertyType[]} properties - Array of properties to display
+ * @property {PropertyType[]} savedProperties - Array of properties saved by the user
+ * @property {React.Dispatch<React.SetStateAction<PropertyType[]>>} setSavedProperties - Function to update saved properties
+ */
 interface PropertyListProps {
   properties: PropertyType[]
   savedProperties: PropertyType[]
   setSavedProperties: React.Dispatch<React.SetStateAction<PropertyType[]>>
 }
 
+/**
+ * PropertyList Component
+ * 
+ * Displays a grid of property cards and manages saved property functionality.
+ * Handles toggling save status and persisting to localStorage.
+ * 
+ * @param {PropertyListProps} props - Component props
+ * @returns {JSX.Element} Grid of property cards or message when no properties match
+ */
 export default function PropertyList({
   properties,
   savedProperties,

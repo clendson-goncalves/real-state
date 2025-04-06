@@ -6,12 +6,30 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import type { PropertyType } from "@/types/property"
 import { Bed, Bath, BookmarkPlus, BookmarkCheck } from "lucide-react"
 import Image from "next/image"
+
+/**
+ * Props for the PropertyCard component
+ * 
+ * @interface PropertyCardProps
+ * @property {PropertyType} property - The property data to display
+ * @property {boolean} isSaved - Whether the property is saved to user favorites
+ * @property {() => void} onToggleSave - Function to toggle saved status
+ */
 interface PropertyCardProps {
   property: PropertyType
   isSaved: boolean
   onToggleSave: () => void
 }
 
+/**
+ * PropertyCard Component
+ * 
+ * Displays a property listing as a card with image, details and actions.
+ * Features include property info, save/bookmark functionality, and navigation to detail page.
+ * 
+ * @param {PropertyCardProps} props - Component props
+ * @returns {JSX.Element} Rendered property card
+ */
 export default function PropertyCard({ property, isSaved, onToggleSave }: PropertyCardProps) {
   const { Id, Title, Location, Bedrooms, Bathrooms, ThumbnailURL, ["Sale Price"]: price } = property
 
