@@ -77,10 +77,26 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
 
   return (
     <main className="container max-w-screen-lg mx-auto px-4 py-8">
-      <Button onClick={() => router.push("/")} variant="outline" className="mb-6">
+      <div className="flex justify-between items-center mb-6">
+      <Button onClick={() => router.push("/")} variant="outline">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to listings
       </Button>
+      {saved.length > 0 && (
+              <Button onClick={() => setShowModal(true)} variant="outline">
+                 <BookmarkIcon className="h-4 w-4" />
+                Saved Properties ({saved.length})
+              </Button>
+            )}
 
+            {showModal && (
+              <SavedPropertiesModal
+                savedProperties={saved}
+                setSavedProperties={setSaved}
+                onClose={() => setShowModal(false)}
+              />
+            )}
+      </div>
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="flex justify-between items-start mb-4">
@@ -108,21 +124,6 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
                 </>
               )}
             </Button>
-
-            {saved.length > 0 && (
-              <Button onClick={() => setShowModal(true)}>
-                 <BookmarkIcon className="h-4 w-4" />
-                Saved Properties ({saved.length})
-              </Button>
-            )}
-
-            {showModal && (
-              <SavedPropertiesModal
-                savedProperties={saved}
-                setSavedProperties={setSaved}
-                onClose={() => setShowModal(false)}
-              />
-            )}
           </div>
 
           <div className="relative h-[400px] w-full mb-6 bg-muted rounded-lg overflow-hidden">
