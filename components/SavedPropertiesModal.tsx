@@ -50,7 +50,7 @@ export default function SavedPropertiesModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[80vh] overflow-hidden">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl max-h-[80vh] overflow-y-auto">
         <div className="px-4 py-2 flex justify-between items-center">
           <h2 className="text-xl font-bold">Saved Properties</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
@@ -62,14 +62,14 @@ export default function SavedPropertiesModal({
           {savedProperties.length === 0 ? (
             <p className="text-center py-8 text-muted-foreground">No saved properties</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {savedProperties.map(({ Id, Title, Location, ThumbnailURL, ["Sale Price"]: price }) => (
                 <Card key={Id} className="overflow-hidden flex p-0">
-                  <div className="relative w-full h-36 flex-shrink-0">
+                  <div className="h-36">
                     <Image 
                       src={ThumbnailURL} 
                       alt={Title} 
-                      className="object-cover w-full h-full" 
+                      className="w-full h-full object-cover" 
                       width={150}
                       height={150}
                     />
