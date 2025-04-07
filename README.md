@@ -156,8 +156,8 @@ The data structure in `data/listings.json` follows this format:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/real-estate-listing.git
-cd real-estate-listing
+git clone https://github.com/clendson-goncalves/real-state-assesstment.git
+cd real-state-assesstment
 ```
 
 2. Install dependencies:
