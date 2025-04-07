@@ -9,6 +9,21 @@
 - **Save Favorites**: Save properties to your favorites list for quick access
 - **Responsive Design**: Optimized for all device sizes from mobile to desktop
 
+## Additional Features
+
+- **Icons**: Added icons for following fields: Beds, Baths, Parking, SQFT, Year Built,
+and the Search button.
+- **Saved Properties**: Added a "Saved Properties" button that opens a modal displaying
+the saved properties.
+- **Within the Card Component**: 
+    - The property image is now displayed as a link to the property details page.
+    - A button has been added to save the property.
+- **Within the Contact Form**: Implemented additional field validations according to requested
+rules (all fields should not be empty):
+    - Full Name: Must be at least 3 characters.
+    - Phone Number: Must contain at least 8 digits.
+    - Comments: Must be at least 10 characters.
+
 ## Tech Stack
 
 - **Framework**: [Next.js 15](https://nextjs.org/)
@@ -107,7 +122,8 @@ To test these endpoints during development:
 
 ## API Simulation
 
-The application uses a JSON file to simulate a backend API. The data structure in `data/listings.json` follows this format:
+The application uses a JSON file to simulate a backend API. 
+The data structure in `data/listings.json` follows this format:
 
 ```json
 [

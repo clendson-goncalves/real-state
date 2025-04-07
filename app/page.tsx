@@ -11,8 +11,15 @@ import { BookmarkIcon } from "lucide-react"
 /**
  * Home Page Component
  * 
- * The main landing page of the application displaying property listings with filtering capabilities.
- * Features include property searching, filtering, and saved properties management.
+ * The main page of the application displaying property listings with filtering capabilities.
+ * Filters include bedrooms, bathrooms, parking, and price range.
+ * The Card component is used to display the property listings.
+ * The property details page is a separate page that displays detailed information about a specific property.
+ * 
+ * Additional features:
+ * The main page has a Saved Properties button that opens a modal with the saved properties.
+ * In the Card component, the property image is displayed as a link to the property details page.
+ * In the Card was added a button to save the property.
  * 
  * @returns {JSX.Element} The rendered homepage with filters and property listings
  */
