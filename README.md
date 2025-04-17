@@ -1,4 +1,4 @@
-# Real Estate Listing - Frontend Assessment by Clendson Goncalves
+# Real Estate Listing
 
 ## Features
 
